@@ -1,0 +1,14 @@
+.comic {
+    grid-gap: 5px;
+    width: 80%;
+    margin: auto;
+}
+
+.img {
+    overflow: auto hidden;
+    text-align: center;
+}
+
+p.alt {
+    padding: 0 2em;
+}

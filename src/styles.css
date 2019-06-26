@@ -1,1 +1,40 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    font-family: monospace;
+}
+
+button {
+    display: inline-block;
+    border: none;
+    padding: 0.5em 1em;
+    margin: 4px 2px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-family: monospace;
+    cursor: pointer;
+    text-align: center;
+    transition: background 250ms ease-in-out, 
+                transform 150ms ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+button:hover{
+    background: #0053ba;
+}
+
+button:focus {
+    outline: 1px solid #fff;
+    outline-offset: -4px;
+}
+
+button:active {
+    transform: scale(0.99);
+}
+
+input {
+    width: 5em;
+    height: 2em;
+    padding-left: 0.2em;
+    padding-top: 0.2em;
+}
