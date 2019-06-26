@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-// import { HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class XkcdService {
 
-  // constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
   getComic(id?:number) {
     let path:string;
@@ -16,10 +16,7 @@ export class XkcdService {
     } else {
       path = "https://xkcd.now.sh";
     }
-    // return this.http.get(path);
-    return fetch(path).then(response => {
-      return response.json();
-    })
+    return this.http.get(path);
   }
 
 }

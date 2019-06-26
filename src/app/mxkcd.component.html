@@ -1,7 +1,7 @@
-<div class="comic" *ngIf="!comic.img">
+<div class="comic" *ngIf="!comic">
     <h1>Loading...</h1>
 </div>
-<div class="comic" *ngIf="comic.img">
+<div class="comic" *ngIf="comic">
     <h1> [{{comic.num}}] {{ comic.title }} </h1>
     <div class="img">
         <img *ngIf="comic.img" [src]="comic.img" [alt]="comic.alt" />
@@ -12,7 +12,7 @@
     <div class="actions">
             <button (click)="today()">Today</button>
             <button (click)="random()">Random</button>
-            <input type="number" [value]="comicId" (input)="comicId=$event.target.value" placeholder="comic id" [max]="highestNum" />
+            <input type="number" [value]="comic.num" (input)="comicId=$event.target.value" placeholder="comic id" [max]="highestNum" />
             <button (click)="byId(comicId)">By ID</button>
     </div>
 </div>

@@ -3,42 +3,61 @@ import { Component, OnInit } from '@angular/core';
 // import { comic } from '../comic';
 import { XkcdService } from './xkcd.service';
 
+type comic = {
+    month?: string,
+    num: number,
+    link?: string,
+    year?: string,
+    news?: string,
+    safe_title?: string,
+    transcript?: string,
+    alt?: string,
+    img?: string,
+    title?: string,
+    day?: string,
+    imgRetina?: string
+};
+
 @Component({
     selector: 'mxkcd-comic',
     templateUrl: './mxkcd.component.html',
     styleUrls: ['./mxkcd.component.css']
   })
 export class ComicComponent implements OnInit {
-    comic: {num: number} = { num: 0 };
-    highestNum = this.comic.num;
-    comicId = this.comic.num;
+    comic: comic;
+    highestNum: number;
+    comicId: number;
 
     constructor(private xkcd: XkcdService) {
     }
 
-    async random() {
-        this.comicId = Math.floor(Math.random() * this.highestNum);
-        console.log(`Getting random comic with id ${this.comicId}`);
-        this.comic = await this.xkcd.getComic(this.comicId);
+    random() {
+        const id = Math.floor(Math.random() * this.highestNum);
+        this.xkcd.getComic(id)
+            .subscribe((data:comic) => {this.comic = data});
     }
 
-    async byId(id:number) {
-        console.log(`You requestd comic id ${id}`);
+    byId(id:number) {
+        // this.comicId = id;
         if (id > this.highestNum) {
             console.warn('Requesting id above max. Reducing to today');
-            return await this.today();
+            return this.today();
         }
-        this.comic = await this.xkcd.getComic(id);
+        this.xkcd.getComic(id)
+            .subscribe((data:comic) => {
+                this.comic = data
+            });
     }
 
-    async today() {
-        this.comic = await this.xkcd.getComic();
-        this.comicId = this.comic.num;
-        console.log('You requested today\'s comic');
+    today() {
+        this.xkcd.getComic()
+            .subscribe((data:comic) => {
+                this.comic = data
+                this.highestNum = this.comic.num;
+            });
     }
 
     async ngOnInit() {
-        this.comic = await this.xkcd.getComic();
-        this.highestNum = this.comic.num;
+        this.today();
     }
 }
