@@ -3,7 +3,9 @@
 **Finally**, I have a mobile-friendly version of XKCD!
 I just need to set it up on firebase :)
 
-[ This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.4. ]
+*Using a CORS version of xkcd published on xkcd.now.sh*
+
+*[ This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.4. ]*
 
 ------------------------
 
