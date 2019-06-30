@@ -12,7 +12,7 @@
     <div class="actions">
             <button (click)="today()">Today</button>
             <button (click)="random()">Random</button>
-            <input type="number" [value]="comic.num" (input)="comicId=$event.target.value" placeholder="comic id" [max]="highestNum" />
+            <input type="number" [value]="comic.num" (input)="comicId=$event.target.value" placeholder="comic id" (keyup)="onKey($event)" />
             <button (click)="byId(comicId)">By ID</button>
     </div>
 </div>

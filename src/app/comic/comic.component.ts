@@ -55,6 +55,14 @@ export class ComicComponent implements OnInit {
         });
   }
 
+  onKey(event) {
+    const key = event.key;
+    if (key === 'Enter') {
+      const id = event.target.value;
+      this.byId(id);
+    }
+  }
+
   async ngOnInit() {
     // init the service once
     this.xkcd.init(() => {
