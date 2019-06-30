@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 import { XkcdService } from '../xkcd.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 type comic = {
@@ -29,43 +31,42 @@ export class ComicComponent implements OnInit {
 
   constructor(
       private xkcd: XkcdService,
-      private route: ActivatedRoute
+      private route: ActivatedRoute,
+      private router: Router
   ) { }
 
   random() {
-      const id = Math.floor(Math.random() * this.xkcd.highest);
-      this.xkcd.getComic(id)
-          .subscribe((data:comic) => {this.comic = data});
+    const id = Math.floor(Math.random() * (this.xkcd.highest || 1000));
+    this.router.navigate(['/comic/' + id]);
   }
 
   byId(id:number) {
-      // this.comicId = id;
-      if (id > this.xkcd.highest) {
-          console.warn('Requesting id above max. Reducing to today');
-          return this.today();
-      }
-      this.xkcd.getComic(id)
-          .subscribe((data:comic) => {
-              this.comic = data
-          });
+    if (id > this.xkcd.highest) {
+        console.warn('Requesting id above max. Reducing to today');
+        return this.today();
+    }
+    this.router.navigate(['/comic/' + id]);
   }
 
   today() {
-      this.xkcd.getComic()
-          .subscribe((data:comic) => {
-              this.comic = data;
-          });
+    this.xkcd.getComic()
+        .subscribe((data:comic) => {
+            this.comic = data;
+        });
   }
 
   async ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
-
+    // init the service once
     this.xkcd.init(() => {
-      if (id && parseInt(id)) {
-        this.byId(parseInt(id));
-      } else {
-        this.today();
-      }  
+      // subscribe to parameter watching
+      this.route.paramMap.pipe(
+        switchMap((params: ParamMap) => {
+          // get a new commic when id changes
+          const id = +params.get('id');
+          return this.xkcd.getComic(id);
+        }
+        // change the comic data when observer says to.
+      )).subscribe((data:comic) => this.comic = data);
     });
 
   }
