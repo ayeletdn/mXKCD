@@ -25,7 +25,6 @@ type comic = {
 })
 export class ComicComponent implements OnInit {
   comic: comic;
-  highestNum: number;
   comicId: number;
 
   constructor(
@@ -34,14 +33,14 @@ export class ComicComponent implements OnInit {
   ) { }
 
   random() {
-      const id = Math.floor(Math.random() * this.highestNum);
+      const id = Math.floor(Math.random() * this.xkcd.highest);
       this.xkcd.getComic(id)
           .subscribe((data:comic) => {this.comic = data});
   }
 
   byId(id:number) {
       // this.comicId = id;
-      if (id > this.highestNum) {
+      if (id > this.xkcd.highest) {
           console.warn('Requesting id above max. Reducing to today');
           return this.today();
       }
@@ -54,17 +53,20 @@ export class ComicComponent implements OnInit {
   today() {
       this.xkcd.getComic()
           .subscribe((data:comic) => {
-              this.comic = data
-              this.highestNum = this.comic.num;
+              this.comic = data;
           });
   }
 
   async ngOnInit() {
-      const id = this.route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.paramMap.get('id');
+
+    this.xkcd.init(() => {
       if (id && parseInt(id)) {
         this.byId(parseInt(id));
       } else {
         this.today();
-      }
+      }  
+    });
+
   }
 }
