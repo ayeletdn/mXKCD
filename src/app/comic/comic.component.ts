@@ -37,7 +37,7 @@ export class ComicComponent implements OnInit {
 
   random() {
     const id = Math.floor(Math.random() * (this.xkcd.highest || 1000));
-    this.router.navigate(['/comic/' + id]);
+    this.router.navigate(['/comic', id]);
   }
 
   byId(id:number) {
@@ -45,7 +45,7 @@ export class ComicComponent implements OnInit {
         console.warn('Requesting id above max. Reducing to today');
         return this.today();
     }
-    this.router.navigate(['/comic/' + id]);
+    this.router.navigate(['/comic', id]);
   }
 
   today() {
