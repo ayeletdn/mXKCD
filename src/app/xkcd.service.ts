@@ -13,6 +13,12 @@ export class XkcdService {
   }
 
   init(completeHandler) {
+    // no need to initialize if already done.
+    if (this.highest > 0) {
+      completeHandler();
+      return;
+    }
+
     this._getComic().subscribe({
       next: (data:{num:number}) => {
         this.today = data;
