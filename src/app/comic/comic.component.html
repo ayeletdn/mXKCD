@@ -13,6 +13,6 @@
             <button (click)="today()">Today</button>
             <button (click)="random()">Random</button>
             <input type="number" #comicnum [value]="comic.num" (keyup.enter)="byId(comicnum.value)" placeholder="comic id" />
-            <button (click)="byId(comicId)">By ID</button>
+            <button (click)="byId(comicnum.value)">By ID</button>
     </div>
 </div>
