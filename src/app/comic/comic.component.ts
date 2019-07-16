@@ -57,7 +57,7 @@ export class ComicComponent implements OnInit {
 
   async ngOnInit() {
     // init the service once
-    this.xkcd.init(() => {
+    this.xkcd.init().then(() => {
       // subscribe to parameter watching
       this.route.paramMap.pipe(
         switchMap((params: ParamMap) => {
