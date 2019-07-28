@@ -49,6 +49,11 @@ export class ComicComponent implements OnInit {
   }
 
   today() {
+    if (document.location.pathname.length > 1) {
+      this.router.navigate(['']);
+      return;
+    }
+    
     this.xkcd.getComic()
         .subscribe((data:comic) => {
             this.comic = data;

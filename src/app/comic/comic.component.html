@@ -10,9 +10,9 @@
         <p class="alt">{{comic.alt}}</p>
     </div>
     <div class="actions">
-            <button (click)="today()">Today</button>
-            <button (click)="random()">Random</button>
+            <button (click)="today()" id="getToday">Today</button>
+            <button (click)="random()" id="getRandom">Random</button>
             <input type="number" #comicnum [value]="comic.num" (keyup.enter)="byId(comicnum.value)" placeholder="comic id" />
-            <button (click)="byId(comicnum.value)">By ID</button>
+            <button (click)="byId(comicnum.value)" id="getById">By ID</button>
     </div>
 </div>
